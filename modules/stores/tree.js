@@ -1,17 +1,24 @@
 import Immutable from 'immutable';
-import {expandTreePath, expandTreeSubpath, getItemByPath, fixPathsInTree} from '../utils/treeUtils';
-import {defaultRuleProperties, defaultGroupProperties, defaultOperator, defaultOperatorOptions, defaultRoot} from '../utils/defaultUtils';
-import {getFirstOperator} from '../utils/configUtils';
+import { expandTreePath, expandTreeSubpath, getItemByPath, fixPathsInTree } from '../utils/treeUtils';
+import { defaultRuleProperties, defaultGroupProperties, defaultOperator, defaultOperatorOptions, defaultRoot } from '../utils/defaultUtils';
+import { getFirstOperator } from '../utils/configUtils';
 import * as constants from '../constants';
 import uuid from '../utils/uuid';
 import omit from 'lodash/omit';
-import {getFieldConfig, getOperatorConfig, getFieldWidgetConfig, getValueSourcesForFieldOp} from "../utils/configUtils";
-import {defaultValue, eqArrSet} from "../utils/stuff";
-import {getOperatorsForField, getWidgetForFieldOp} from "../utils/configUtils";
+import { getFieldConfig, getOperatorConfig, getFieldWidgetConfig, getValueSourcesForFieldOp } from "../utils/configUtils";
+import { defaultValue, eqArrSet } from "../utils/stuff";
+import { getOperatorsForField, getWidgetForFieldOp } from "../utils/configUtils";
 var stringify = require('json-stringify-safe');
 
 
 const hasChildren = (tree, path) => tree.getIn(expandTreePath(path, 'children1')).size > 0;
+
+const hasEmptyChildren = (tree, path) => {
+    // TODO: Find in path wheather children with no values exist
+    const chil = tree.getIn(expandTreePath(path, 'properties')).toArray();
+    console.log('has empty', chil);
+    return chil.size > 0;
+}
 
 /**
  * @param {object} config
@@ -93,7 +100,7 @@ const setConjunction = (state, path, conjunction) =>
  */
 const addItem = (state, path, type, id, properties) => {
     state = state.mergeIn(expandTreePath(path, 'children1'), new Immutable.OrderedMap({
-        [id]: new Immutable.Map({type, id, properties})
+        [id]: new Immutable.Map({ type, id, properties })
     }));
     state = fixPathsInTree(state);
     return state;
@@ -124,7 +131,7 @@ const moveItem = (state, fromPath, toPath, placement, config) => {
 
     let to = getItemByPath(state, toPath);
     let targetPath = (placement == constants.PLACEMENT_APPEND || placement == constants.PLACEMENT_PREPEND) ? toPath : toPath.pop();
-    let target = (placement == constants.PLACEMENT_APPEND || placement == constants.PLACEMENT_PREPEND) ? 
+    let target = (placement == constants.PLACEMENT_APPEND || placement == constants.PLACEMENT_PREPEND) ?
         to
         : toPath.size > 1 ? getItemByPath(state, targetPath) : null;
     let targetChildren = target ? target.get('children1') : null;
@@ -133,9 +140,9 @@ const moveItem = (state, fromPath, toPath, placement, config) => {
         return state;
 
     let isSameParent = (source.get('id') == target.get('id'));
-    let isSourceInsideTarget = targetPath.size < sourcePath.size 
+    let isSourceInsideTarget = targetPath.size < sourcePath.size
         && JSON.stringify(targetPath.toArray()) == JSON.stringify(sourcePath.toArray().slice(0, targetPath.size));
-    let isTargetInsideSource = targetPath.size > sourcePath.size 
+    let isTargetInsideSource = targetPath.size > sourcePath.size
         && JSON.stringify(sourcePath.toArray()) == JSON.stringify(targetPath.toArray().slice(0, sourcePath.size));
     let sourceSubpathFromTarget = null;
     let targetSubpathFromSource = null;
@@ -161,7 +168,7 @@ const moveItem = (state, fromPath, toPath, placement, config) => {
                 if (itemId == to.get('id') && placement == constants.PLACEMENT_BEFORE) {
                     r.set(from.get('id'), from);
                 }
-                
+
                 r.set(itemId, item);
 
                 if (itemId == to.get('id') && placement == constants.PLACEMENT_AFTER) {
@@ -170,9 +177,9 @@ const moveItem = (state, fromPath, toPath, placement, config) => {
             }
         });
     } else if (placement == constants.PLACEMENT_APPEND) {
-        newTargetChildren = newTargetChildren.merge({[from.get('id')]: from});
+        newTargetChildren = newTargetChildren.merge({ [from.get('id')]: from });
     } else if (placement == constants.PLACEMENT_PREPEND) {
-        newTargetChildren = Immutable.OrderedMap({[from.get('id')]: from}).merge(newTargetChildren);
+        newTargetChildren = Immutable.OrderedMap({ [from.get('id')]: from }).merge(newTargetChildren);
     }
 
     if (isTargetInsideSource) {
@@ -211,14 +218,14 @@ export const _getNewValueForFieldOp = function (config, oldConfig = null, curren
     const newOperatorConfig = getOperatorConfig(config, newOperator, newField);
     const operatorCardinality = newOperator ? defaultValue(newOperatorConfig.cardinality, 1) : null;
     const currentFieldConfig = getFieldConfig(currentField, oldConfig);
-    const currentWidgets = Array.from({length: operatorCardinality}, (_ignore, i) => {
+    const currentWidgets = Array.from({ length: operatorCardinality }, (_ignore, i) => {
         let vs = currentValueSrc.get(i) || null;
         let w = getWidgetForFieldOp(oldConfig, currentField, currentOperator, vs);
         return w;
     });
 
     const newFieldConfig = getFieldConfig(newField, config);
-    const newWidgets = Array.from({length: operatorCardinality}, (_ignore, i) => {
+    const newWidgets = Array.from({ length: operatorCardinality }, (_ignore, i) => {
         let vs = currentValueSrc.get(i) || null;
         let w = getWidgetForFieldOp(config, newField, newOperator, vs);
         return w;
@@ -226,16 +233,16 @@ export const _getNewValueForFieldOp = function (config, oldConfig = null, curren
     const commonWidgetsCnt = Math.min(newWidgets.length, currentWidgets.length);
     const firstWidgetConfig = getFieldWidgetConfig(config, newField, newOperator, null, currentValueSrc.first());
     const valueSources = getValueSourcesForFieldOp(config, newField, newOperator);
-    let canReuseValue = currentField && currentOperator && newOperator 
-        && (!changedField 
-            || changedField == 'field' && !config.settings.clearValueOnChangeField 
+    let canReuseValue = currentField && currentOperator && newOperator
+        && (!changedField
+            || changedField == 'field' && !config.settings.clearValueOnChangeField
             || changedField == 'operator' && !config.settings.clearValueOnChangeOp)
-        && (currentFieldConfig && newFieldConfig && currentFieldConfig.type == newFieldConfig.type) 
+        && (currentFieldConfig && newFieldConfig && currentFieldConfig.type == newFieldConfig.type)
         && JSON.stringify(currentWidgets.slice(0, commonWidgetsCnt)) == JSON.stringify(newWidgets.slice(0, commonWidgetsCnt))
-    ;
+        ;
 
     if (canReuseValue) {
-        for (let i = 0 ; i < commonWidgetsCnt ; i++) {
+        for (let i = 0; i < commonWidgetsCnt; i++) {
             let v = currentValue.get(i);
             let vType = currentValueType.get(i) || null;
             let vSrc = currentValueSrc.get(i) || null;
@@ -249,7 +256,7 @@ export const _getNewValueForFieldOp = function (config, oldConfig = null, curren
     }
 
     let newValue = null, newValueSrc = null, newValueType = null;
-    newValue = new Immutable.List(Array.from({length: operatorCardinality}, (_ignore, i) => {
+    newValue = new Immutable.List(Array.from({ length: operatorCardinality }, (_ignore, i) => {
         let v = undefined;
         if (canReuseValue) {
             if (i < currentValue.size)
@@ -259,7 +266,7 @@ export const _getNewValueForFieldOp = function (config, oldConfig = null, curren
         }
         return v;
     }));
-    newValueSrc = new Immutable.List(Array.from({length: operatorCardinality}, (_ignore, i) => {
+    newValueSrc = new Immutable.List(Array.from({ length: operatorCardinality }, (_ignore, i) => {
         let vs = null;
         if (canReuseValue) {
             if (i < currentValueSrc.size)
@@ -271,7 +278,7 @@ export const _getNewValueForFieldOp = function (config, oldConfig = null, curren
         }
         return vs;
     }));
-    newValueType = new Immutable.List(Array.from({length: operatorCardinality}, (_ignore, i) => {
+    newValueType = new Immutable.List(Array.from({ length: operatorCardinality }, (_ignore, i) => {
         let v = null;
         if (canReuseValue) {
             if (i < currentValueType.size)
@@ -282,7 +289,7 @@ export const _getNewValueForFieldOp = function (config, oldConfig = null, curren
         return v;
     }));
 
-    return {canReuseValue, newValue, newValueSrc, newValueType};
+    return { canReuseValue, newValue, newValueSrc, newValueType };
 };
 
 const _validateValue = (config, field, operator, value, valueType, valueSrc) => {
@@ -335,7 +342,7 @@ const _validateValue = (config, field, operator, value, valueType, valueSrc) => 
         let fn = fieldWidgetDefinition.validateValue;
         if (typeof fn == 'function') {
             let args = [
-                v, 
+                v,
                 //field,
                 fieldConfig,
             ];
@@ -355,6 +362,17 @@ const _validateValue = (config, field, operator, value, valueType, valueSrc) => 
 const setField = (state, path, newField, config) => {
     if (!newField)
         return removeItem(state, path);
+
+    // TODO: Find how to add new field when no empty fields
+    // if (isEmptyGroup && !canLeaveEmpty) {
+    const parentPath = path.slice(0, -1);
+    if (hasEmptyChildren(state, parentPath)) {
+        // TODO: Check in parent path if there are empty rules - if not - add one
+        state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config));
+        // }
+        state = fixPathsInTree(state);
+    }
+    console.log('set field', path, 'field?', newField);
 
     return state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
         const currentField = current.get('field');
@@ -385,8 +403,10 @@ const setField = (state, path, newField, config) => {
             }
         }
 
-        let {canReuseValue, newValue, newValueSrc, newValueType} = _getNewValueForFieldOp (config, config, current, newField, newOperator, 'field');
+        let { canReuseValue, newValue, newValueSrc, newValueType } = _getNewValueForFieldOp(config, config, current, newField, newOperator, 'field');
         let newOperatorOptions = canReuseValue ? currentOperatorOptions : defaultOperatorOptions(config, newOperator, newField);
+
+        console.log('val', newValue);
 
         return current
             .set('field', newField)
@@ -411,7 +431,7 @@ const setOperator = (state, path, newOperator, config) => {
         const currentOperator = current.get('operator');
         const currentOperatorOptions = current.get('operatorOptions');
 
-        let {canReuseValue, newValue, newValueSrc, newValueType} = _getNewValueForFieldOp (config, config, current, currentField, newOperator, 'operator');
+        let { canReuseValue, newValue, newValueSrc, newValueType } = _getNewValueForFieldOp(config, config, current, currentField, newOperator, 'operator');
         let newOperatorOptions = canReuseValue ? currentOperatorOptions : defaultOperatorOptions(config, newOperator, currentField);
 
         return current
@@ -480,17 +500,17 @@ const setOperatorOption = (state, path, name, value) => {
 
 
 const emptyDrag = {
-  dragging: {
-    id: null,
-    x: null,
-    y: null,
-    w: null,
-    h: null
-  },
-  mousePos: {},
-  dragStart: {
-    id: null,
-  },
+    dragging: {
+        id: null,
+        x: null,
+        y: null,
+        w: null,
+        h: null
+    },
+    mousePos: {},
+    dragStart: {
+        id: null,
+    },
 };
 
 
@@ -500,58 +520,58 @@ const emptyDrag = {
  */
 export default (config) => {
     const emptyTree = defaultRoot(config);
-    const emptyState = Object.assign({}, {tree: emptyTree}, emptyDrag);
-    
+    const emptyState = Object.assign({}, { tree: emptyTree }, emptyDrag);
+
     return (state = emptyState, action) => {
         switch (action.type) {
             case constants.SET_TREE:
-                return Object.assign({}, state, {tree: action.tree});
+                return Object.assign({}, state, { tree: action.tree });
 
             case constants.ADD_NEW_GROUP:
-                return Object.assign({}, state, {tree: addNewGroup(state.tree, action.path, action.properties, action.config)});
+                return Object.assign({}, state, { tree: addNewGroup(state.tree, action.path, action.properties, action.config) });
 
             case constants.ADD_GROUP:
-                return Object.assign({}, state, {tree: addItem(state.tree, action.path, 'group', action.id, action.properties)});
+                return Object.assign({}, state, { tree: addItem(state.tree, action.path, 'group', action.id, action.properties) });
 
             case constants.REMOVE_GROUP:
-                return Object.assign({}, state, {tree: removeGroup(state.tree, action.path, action.config)});
+                return Object.assign({}, state, { tree: removeGroup(state.tree, action.path, action.config) });
 
             case constants.ADD_RULE:
-                return Object.assign({}, state, {tree: addItem(state.tree, action.path, 'rule', action.id, action.properties)});
+                return Object.assign({}, state, { tree: addItem(state.tree, action.path, 'rule', action.id, action.properties) });
 
             case constants.REMOVE_RULE:
-                return Object.assign({}, state, {tree: removeRule(state.tree, action.path, action.config)});
+                return Object.assign({}, state, { tree: removeRule(state.tree, action.path, action.config) });
 
             case constants.SET_CONJUNCTION:
-                return Object.assign({}, state, {tree: setConjunction(state.tree, action.path, action.conjunction)});
+                return Object.assign({}, state, { tree: setConjunction(state.tree, action.path, action.conjunction) });
 
             case constants.SET_NOT:
-                return Object.assign({}, state, {tree: setNot(state.tree, action.path, action.not)});
+                return Object.assign({}, state, { tree: setNot(state.tree, action.path, action.not) });
 
             case constants.SET_FIELD:
-                return Object.assign({}, state, {tree: setField(state.tree, action.path, action.field, action.config)});
+                return Object.assign({}, state, { tree: setField(state.tree, action.path, action.field, action.config) });
 
             case constants.SET_OPERATOR:
-                return Object.assign({}, state, {tree: setOperator(state.tree, action.path, action.operator, action.config)});
+                return Object.assign({}, state, { tree: setOperator(state.tree, action.path, action.operator, action.config) });
 
             case constants.SET_VALUE:
-                return Object.assign({}, state, {tree: setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.config)});
+                return Object.assign({}, state, { tree: setValue(state.tree, action.path, action.delta, action.value, action.valueType, action.config) });
 
             case constants.SET_VALUE_SRC:
-                return Object.assign({}, state, {tree: setValueSrc(state.tree, action.path, action.delta, action.srcKey)});
+                return Object.assign({}, state, { tree: setValueSrc(state.tree, action.path, action.delta, action.srcKey) });
 
             case constants.SET_OPERATOR_OPTION:
-                return Object.assign({}, state, {tree: setOperatorOption(state.tree, action.path, action.name, action.value)});
+                return Object.assign({}, state, { tree: setOperatorOption(state.tree, action.path, action.name, action.value) });
 
             case constants.MOVE_ITEM:
-                return Object.assign({}, state, {tree: moveItem(state.tree, action.fromPath, action.toPath, action.placement, action.config)});
+                return Object.assign({}, state, { tree: moveItem(state.tree, action.fromPath, action.toPath, action.placement, action.config) });
 
 
             case constants.SET_DRAG_START:
-                return Object.assign({}, state, {dragStart: action.dragStart, dragging: action.dragging, mousePos: action.mousePos});
+                return Object.assign({}, state, { dragStart: action.dragStart, dragging: action.dragging, mousePos: action.mousePos });
 
             case constants.SET_DRAG_PROGRESS:
-                return Object.assign({}, state, {mousePos: action.mousePos, dragging: action.dragging});
+                return Object.assign({}, state, { mousePos: action.mousePos, dragging: action.dragging });
 
             case constants.SET_DRAG_END:
                 return Object.assign({}, state, emptyDrag);
