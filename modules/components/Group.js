@@ -140,21 +140,26 @@ class Group extends Component {
 
   renderChildren = () => {
     let props = this.props;
+    let i = 0;
+
     return props.children1 ? props.children1.map((item) => (
-      <Item
-        key={item.get('id')}
-        id={item.get('id')}
-        //path={props.path.push(item.get('id'))}
-        path={item.get('path')}
-        type={item.get('type')}
-        properties={item.get('properties')}
-        config={props.config}
-        actions={props.actions}
-        children1={item.get('children1')}
-        //tree={props.tree}
-        treeNodesCnt={props.treeNodesCnt}
-        onDragStart={props.onDragStart}
-      />
+      <div className='rule-wrapper'>
+        <span>{i++ === 0 ? 'IF' : 'AND'}</span>
+        <Item
+          key={item.get('id')}
+          id={item.get('id')}
+          //path={props.path.push(item.get('id'))}
+          path={item.get('path')}
+          type={item.get('type')}
+          properties={item.get('properties')}
+          config={props.config}
+          actions={props.actions}
+          children1={item.get('children1')}
+          //tree={props.tree}
+          treeNodesCnt={props.treeNodesCnt}
+          onDragStart={props.onDragStart}
+        />
+      </div>
     )).toList() : null;
   }
 
@@ -240,24 +245,12 @@ class Group extends Component {
           {/* {this.renderHeader()} */}
           {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())}
         </div>
-        <div className='items'>
-          <div className='btns'>
-            <Popover
-              content={this.renderHeader()}
-              trigger="click"
-              visible={this.state.popoverVisible}
-              onVisibleChange={this.handleVisibleChange}
-            >
-              <Button>{this.props.selectedConjunction}</Button>
-            </Popover>
-          </div>
           {this.props.children1 ? (
             <div className={classNames(
               "group--children",
               this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
             )}>{this.renderChildren()}</div>
           ) : null}
-        </div>
         {!this.isGroupTopPosition() && (
           <div className='group--footer'>
             {this.renderGroup(this.getGroupPositionClass())}
