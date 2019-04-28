@@ -4,7 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import map from 'lodash/map';
 import startsWith from 'lodash/startsWith'
 import GroupContainer from './containers/GroupContainer';
-import { Row, Col, Icon, Button, Radio } from 'antd';
+import { Row, Col, Icon, Button, Radio, Popover } from 'antd';
 const ButtonGroup = Button.Group;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -60,6 +60,9 @@ class Group extends Component {
     super(props);
 
     this._setConjunctionHandlers = {};
+    this.state = {
+      popoverVisible: false
+    }
   }
 
   _getSetConjunctionHandler = (itemKey = null) => {
@@ -205,6 +208,10 @@ class Group extends Component {
     );
   }
 
+  handleVisibleChange = (popoverVisible) => {
+    this.setState({ popoverVisible });
+  }
+
   render() {
     let renderType = this.getRenderType(this.props);
     if (!renderType)
@@ -230,15 +237,27 @@ class Group extends Component {
         data-id={this.props.id}
       >
         <div className="group--header">
-          {this.renderHeader()}
+          {/* {this.renderHeader()} */}
           {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())}
         </div>
-        {this.props.children1 ? (
-          <div className={classNames(
-            "group--children",
-            this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
-          )}>{this.renderChildren()}</div>
-        ) : null}
+        <div className='items'>
+          <div className='btns'>
+            <Popover
+              content={this.renderHeader()}
+              trigger="click"
+              visible={this.state.popoverVisible}
+              onVisibleChange={this.handleVisibleChange}
+            >
+              <Button>{this.props.selectedConjunction}</Button>
+            </Popover>
+          </div>
+          {this.props.children1 ? (
+            <div className={classNames(
+              "group--children",
+              this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
+            )}>{this.renderChildren()}</div>
+          ) : null}
+        </div>
         {!this.isGroupTopPosition() && (
           <div className='group--footer'>
             {this.renderGroup(this.getGroupPositionClass())}

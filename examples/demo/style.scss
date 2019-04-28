@@ -1,0 +1,45 @@
+@import '../../css/styles.scss';
+@import '../../css/compact_styles.scss';
+@import '../../css/denormalize.scss';
+
+.group {
+  background: none;
+  border: solid 1px transparent;
+  border-radius: 0;
+  text-align: left;
+
+
+  .items {
+    display: flex;
+    align-items: center;
+
+    .btns {
+      display: inline-block;
+      vertical-align: middle;
+      margin-top: -25px;
+
+      button {
+        width: 70px;
+      }
+    }
+  }
+
+}
+
+.rule {
+  display: inline-block;
+
+  .rule--header {
+    margin-left: 20px;
+  }
+}                                                                             
+
+
+.query-builder {
+
+  & > .group-or-rule-container:first-child > .group-or-rule {
+    & > .items > .btns {
+      margin-top: -4px;
+    }
+  }
+}

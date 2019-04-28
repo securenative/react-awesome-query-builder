@@ -107,7 +107,7 @@ class Rule extends Component {
                     {!this.props.config.settings.readonlyMode &&
                         <Button
                             type="danger"
-                            icon="delete"
+                            icon="close"
                             onClick={this.props.removeSelf}
                             size={this.props.config.settings.renderSize || "small"}
                         >

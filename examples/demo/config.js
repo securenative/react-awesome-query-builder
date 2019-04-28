@@ -18,7 +18,7 @@ const {
 const { ProximityOperator } = Operators;
 import moment from 'moment';
 import en_US from 'antd/lib/locale-provider/en_US';
-import ru_RU from 'antd/lib/locale-provider/ru_RU';
+// import ru_RU from 'antd/lib/locale-provider/ru_RU';
 
 export default {
     conjunctions: {
@@ -818,7 +818,7 @@ export default {
         },
         maxLabelsLength: 50,
         hideConjForOne: true,
-        renderSize: 'small',
+        renderSize: 'default',
         renderConjsAsRadios: false,
         renderFieldAndOpAsDropdown: false,
         customFieldSelectProps: {
@@ -869,7 +869,7 @@ export default {
             }
         },
         valueSourcesPopupTitle: "Select value source",
-        canReorder: true,
+        canReorder: false,
         canCompareFieldWithField: (leftField, leftFieldConfig, rightField, rightFieldConfig) => {
             //for type == 'select'/'multiselect' you can check listValues
             return true;

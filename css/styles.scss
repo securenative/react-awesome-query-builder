@@ -134,7 +134,7 @@
     }
 
      &::after {
-        top: 50%;
+        top: calc(50% - 5px);
         border-width: 0 0 0 2px;    
     }
 
@@ -155,8 +155,10 @@
 
   & > .group-or-rule-container:first-child > .group-or-rule {
       &::before {
-        top: -12px;
-        height: calc(50% + 14px);
+        //top: -12px;
+        // height: calc(50% + 14px);
+        height: 1px;
+        top: 14px;
       }
   }
 
