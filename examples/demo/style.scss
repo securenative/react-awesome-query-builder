@@ -47,6 +47,12 @@ $condition_line_space: 30px;
       visibility: hidden;
     }
   }
+
+  .rule--field, .rule--value {
+    .ant-select, input {
+      min-width: 150px;
+    }
+  }
 }
 
 .rule {
