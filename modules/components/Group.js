@@ -142,8 +142,8 @@ class Group extends Component {
     let props = this.props;
     let i = 0;
 
-    return props.children1 ? props.children1.map((item) => (
-      <div className='rule-wrapper'>
+    return props.children1 ? props.children1.map((item, key) => (
+      <div className='rule-wrapper' key={key}>
         <span>{i++ === 0 ? 'IF' : 'AND'}</span>
         <Item
           key={item.get('id')}
