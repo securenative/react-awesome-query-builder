@@ -54,19 +54,3 @@ $condition_line_space: 30px;
     }
   }
 }
-
-.rule {
-  display: flex;
-  align-items: center;
-
-  .rule--header {
-    margin-left: 20px;
-    float: none;
-    display: flex;
-    align-items: center;
-
-    .anticon {
-      cursor: pointer;
-    }
-  }
-}
