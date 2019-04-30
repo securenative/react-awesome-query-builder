@@ -1,7 +1,7 @@
 'use strict';
 
 exports.__esModule = true;
-exports.moveItem = exports.removeGroup = exports.addGroup = exports.removeRule = exports.addRule = exports.setTree = undefined;
+exports.moveItem = exports.removeGroup = exports.addGroup = exports.removeRule = exports.addRule = exports.onInitValue = exports.setTree = undefined;
 
 var _uuid = require('../utils/uuid');
 
@@ -35,6 +35,19 @@ var setTree = exports.setTree = function setTree(config, tree) {
   return {
     type: constants.SET_TREE,
     tree: tree
+  };
+};
+
+/**
+ * @param {object} config
+ * @param {Immutable.List} path
+ */
+var onInitValue = exports.onInitValue = function onInitValue(config, tree, path) {
+  return {
+    type: constants.ON_INIT_VALUE,
+    tree: tree,
+    path: path,
+    config: config
   };
 };
 

@@ -186,10 +186,23 @@ var Query = (_temp2 = _class2 = function (_Component2) {
         return _this2;
     }
 
-    // handle case when value property changes
-
-
     _createClass(Query, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var value = this.props.value;
+
+
+            if (value) {
+                var id = value.get('id');
+                var path = _immutable2.default.List.of(id);
+                console.log('onInitValue', this.props, 'inv', actions.tree.onInitValue(this.props, value, path));
+                this.state.store.dispatch(actions.tree.onInitValue(this.props, value, path));
+            }
+        }
+
+        // handle case when value property changes
+
+    }, {
         key: 'componentWillReceiveProps',
         value: function componentWillReceiveProps(nextProps) {
             if (this.props.dontDispatchOnNewProps) return;

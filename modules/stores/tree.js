@@ -383,7 +383,7 @@ const setField = (state, path, newField, config) => {
     if (!newField)
         return removeItem(state, path);
 
-    console.log('set field', state, path);
+    console.log('set field', state, 'path', path, 'cfg', config);
 
     let updated = state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
         const currentField = current.get('field');
@@ -529,14 +529,13 @@ const emptyDrag = {
 };
 
 /**
- * When redux initializes
+ * When query builder initializes
  * @param {*} state 
  * @param {*} path 
  * @param {*} config 
  */
-function onInit(state, config) {
-    console.log('On init', state, config);
-    return addItemWhenNotEmpty(state, null, config);
+function onInit(state, path, config) {
+    return addItemWhenNotEmpty(state, path, config);
 }
 
 
@@ -550,11 +549,9 @@ export default (config) => {
 
     
     return (state = emptyState, action) => {
-        console.log('action', action, state, config);
-
         switch (action.type) {
-            // case constants.INIT:
-            //     return Object.assign({}, state, { tree: onInit(state.tree, config) });
+            case constants.ON_INIT_VALUE:
+                return Object.assign({}, state, { tree: onInit(state.tree, action.path, config) });
 
             case constants.SET_TREE:
                 return Object.assign({}, state, { tree: action.tree });

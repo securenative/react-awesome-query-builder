@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import createTreeStore from '../stores/tree';
-import {createStore} from 'redux';
-import {Provider, Connector, connect} from 'react-redux';
+import { createStore } from 'redux';
+import { Provider, Connector, connect } from 'react-redux';
 import * as actions from '../actions';
-import {extendConfig} from "../utils/configUtils";
-import {fixPathsInTree} from '../utils/treeUtils';
-import {bindActionCreators} from "../utils/stuff";
-import {validateTree} from "../utils/validation";
-import {queryString} from "../utils/queryString";
-import {defaultRoot} from "../utils/defaultUtils";
+import { extendConfig } from "../utils/configUtils";
+import { fixPathsInTree } from '../utils/treeUtils';
+import { bindActionCreators } from "../utils/stuff";
+import { validateTree } from "../utils/validation";
+import { queryString } from "../utils/queryString";
+import { defaultRoot } from "../utils/defaultUtils";
 import { LocaleProvider } from 'antd';
 import Immutable from 'immutable';
 
@@ -34,19 +34,19 @@ class ConnectedQuery extends Component {
         }
     }
 
-    validateTree (props, oldConfig, oldTree) {
+    validateTree(props, oldConfig, oldTree) {
         let tree = validateTree(props.tree, oldTree, props.config, oldConfig, true, true);
         tree = fixPathsInTree(tree);
         return tree;
     }
 
-    _updateActions (props) {
-      const {config, dispatch} = props;
-      this.actions = bindActionCreators({...actions.tree, ...actions.group, ...actions.rule}, config, dispatch);
+    _updateActions(props) {
+        const { config, dispatch } = props;
+        this.actions = bindActionCreators({ ...actions.tree, ...actions.group, ...actions.rule }, config, dispatch);
     }
 
     componentWillReceiveProps(nextProps) {
-        const {tree, onChange} = nextProps;
+        const { tree, onChange } = nextProps;
         const oldTree = this.props.tree;
         const oldConfig = this.props.config;
         const newTree = nextProps.tree;
@@ -58,18 +58,18 @@ class ConnectedQuery extends Component {
         }
 
         this.validatedTree = this.validateTree(nextProps, oldConfig, oldTree);
-        let validatedTreeChanged = oldValidatedTree !== this.validatedTree 
+        let validatedTreeChanged = oldValidatedTree !== this.validatedTree
             && JSON.stringify(oldValidatedTree) != JSON.stringify(this.validatedTree);
         if (validatedTreeChanged) {
             onChange && onChange(this.validatedTree);
-            this.setState({treeChanged: true})
+            this.setState({ treeChanged: true })
         } else {
-            this.setState({treeChanged: false})
+            this.setState({ treeChanged: false })
         }
     }
 
     render() {
-        const {config, tree, get_children, dispatch, ...props} = this.props;
+        const { config, tree, get_children, dispatch, ...props } = this.props;
         const validatedTree = this.validatedTree;
         return <div>
             {get_children({
@@ -85,7 +85,7 @@ class ConnectedQuery extends Component {
 const QueryContainer = connect(
     (state) => {
         return {
-          tree: state.tree,
+            tree: state.tree,
         }
     },
 )(ConnectedQuery);
@@ -125,6 +125,19 @@ export default class Query extends Component {
         };
     }
 
+    componentDidMount() {
+        const { value } = this.props;
+
+        if (value) {
+            const id = value.get('id');
+            const path = Immutable.List.of(id);
+            
+            this.state.store.dispatch(
+                actions.tree.onInitValue(this.props, value, path)
+            );
+        }
+    }
+
     // handle case when value property changes
     componentWillReceiveProps(nextProps) {
         if (this.props.dontDispatchOnNewProps)
@@ -146,18 +159,18 @@ export default class Query extends Component {
     }
 
     render() {
-        const {conjunctions, fields, types, operators, widgets, settings, get_children, onChange, value, tree, children, ...props} = this.props;
-        let config = {conjunctions, fields, types, operators, widgets, settings};
+        const { conjunctions, fields, types, operators, widgets, settings, get_children, onChange, value, tree, children, ...props } = this.props;
+        let config = { conjunctions, fields, types, operators, widgets, settings };
         config = extendConfig(config);
 
         return (
             <LocaleProvider locale={config.settings.locale.antd}>
                 <Provider store={this.state.store}>
                     <QueryContainer
-                      store={this.state.store}
-                      get_children={get_children}
-                      config={config}
-                      onChange={onChange}
+                        store={this.state.store}
+                        get_children={get_children}
+                        config={config}
+                        onChange={onChange}
                     />
                 </Provider>
             </LocaleProvider>
