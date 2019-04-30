@@ -383,8 +383,6 @@ const setField = (state, path, newField, config) => {
     if (!newField)
         return removeItem(state, path);
 
-    console.log('set field', state, 'path', path, 'cfg', config);
-
     let updated = state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
         const currentField = current.get('field');
         const currentOperator = current.get('operator');

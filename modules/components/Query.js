@@ -118,6 +118,30 @@ export default class Query extends Component {
             tree: props.value,
         };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
         const store = createTreeStore(config);
 
         this.state = {

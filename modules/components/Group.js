@@ -241,10 +241,10 @@ class Group extends Component {
         ref="group"
         data-id={this.props.id}
       >
-        <div className="group--header">
+        {/* <div className="group--header"> */}
           {/* {this.renderHeader()} */}
-          {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())}
-        </div>
+          {/* {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())} */}
+        {/* </div> */}
           {this.props.children1 ? (
             <div className={classNames(
               "group--children",

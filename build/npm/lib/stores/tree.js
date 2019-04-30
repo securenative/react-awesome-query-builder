@@ -464,8 +464,6 @@ function addItemWhenNotEmpty(state, path, config) {
 var setField = function setField(state, path, newField, config) {
     if (!newField) return removeItem(state, path);
 
-    console.log('set field', state, 'path', path, 'cfg', config);
-
     var updated = state.updateIn((0, _treeUtils.expandTreePath)(path, 'properties'), function (map) {
         return map.withMutations(function (current) {
             var currentField = current.get('field');
@@ -625,15 +623,13 @@ var emptyDrag = {
 };
 
 /**
- * When redux initializes
+ * When query builder initializes
  * @param {*} state 
  * @param {*} path 
  * @param {*} config 
  */
 function onInit(state, path, config) {
-    console.log('On init', state, path, config);
     return addItemWhenNotEmpty(state, path, config);
-    return state;
 }
 
 /**
@@ -648,8 +644,6 @@ exports.default = function (config) {
     return function () {
         var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : emptyState;
         var action = arguments[1];
-
-        console.log('action', action, state, config);
 
         switch (action.type) {
             case constants.ON_INIT_VALUE:

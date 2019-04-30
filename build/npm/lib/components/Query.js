@@ -195,7 +195,7 @@ var Query = (_temp2 = _class2 = function (_Component2) {
             if (value) {
                 var id = value.get('id');
                 var path = _immutable2.default.List.of(id);
-                console.log('onInitValue', this.props, 'inv', actions.tree.onInitValue(this.props, value, path));
+
                 this.state.store.dispatch(actions.tree.onInitValue(this.props, value, path));
             }
         }
