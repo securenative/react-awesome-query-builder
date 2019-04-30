@@ -71,6 +71,9 @@ const removeRule = (state, path, config) => {
         state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config));
     }
     state = fixPathsInTree(state);
+
+    state = addItemWhenNotEmpty(state, path, config);
+
     return state;
 };
 

@@ -101,6 +101,9 @@ var removeRule = function removeRule(state, path, config) {
         state = addItem(state, parentPath, 'rule', (0, _uuid2.default)(), (0, _defaultUtils.defaultRuleProperties)(config));
     }
     state = (0, _treeUtils.fixPathsInTree)(state);
+
+    state = addItemWhenNotEmpty(state, path, config);
+
     return state;
 };
 
