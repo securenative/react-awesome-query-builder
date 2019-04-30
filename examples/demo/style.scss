@@ -64,5 +64,9 @@ $condition_line_space: 30px;
     float: none;
     display: flex;
     align-items: center;
+
+    .anticon {
+      cursor: pointer;
+    }
   }
 }
