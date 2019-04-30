@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactDOM from 'react-dom';
-import shallowCompare from 'react-addons-shallow-compare';
 import RuleContainer from './containers/RuleContainer';
 import Field from './Field';
 import Operator from './Operator';
 import Widget from './Widget';
 import OperatorOptions from './OperatorOptions';
-import { Row, Col, Menu, Dropdown, Icon, Tooltip, Button } from 'antd';
+import { Col, Menu, Dropdown, Icon, Button } from 'antd';
 const SubMenu = Menu.SubMenu;
 const MenuItem = Menu.Item;
 const DropdownButton = Dropdown.Button;
 import {getFieldConfig, getFieldPath, getFieldPathLabels, getOperatorConfig, getFieldWidgetConfig} from "../utils/configUtils";
-import size from 'lodash/size';
-var stringify = require('json-stringify-safe');
 const classNames = require('classnames');
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-import {Provider, Connector, connect} from 'react-redux';
 
 
 @RuleContainer
@@ -103,18 +98,6 @@ class Rule extends Component {
                 ref="rule"
                 data-id={this.props.id}
             >
-                <div className="rule--header">
-                    {!this.props.config.settings.readonlyMode &&
-                        <Button
-                            type="danger"
-                            icon="close"
-                            onClick={this.props.removeSelf}
-                            size={this.props.config.settings.renderSize || "small"}
-                        >
-                            {this.props.config.settings.deleteLabel !== undefined ? this.props.config.settings.deleteLabel : "Delete"}
-                        </Button>
-                    }
-                </div>
                 {/*<div className="rule--body">*/}
                     {/*<Row>*/}
                         { this.props.config.settings.canReorder && this.props.treeNodesCnt > 2 &&
@@ -188,6 +171,24 @@ class Rule extends Component {
                         }
                     {/*</Row>*/}
                 {/*</div>*/}
+
+                <div className="rule--header">
+                    {!this.props.config.settings.readonlyMode &&
+                        <Icon 
+                            type="close"
+                            onClick={this.props.removeSelf}
+                        
+                        />
+                        // <Button
+                        //     type="danger"
+                        //     icon="close"
+                        //     onClick={this.props.removeSelf}
+                        //     size={this.props.config.settings.renderSize || "small"}
+                        // >
+                        //     {this.props.config.settings.deleteLabel !== undefined ? this.props.config.settings.deleteLabel : "Delete"}
+                        // </Button>
+                    }
+                </div>
             </div>
         );
     }

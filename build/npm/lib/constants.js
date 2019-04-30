@@ -1,7 +1,6 @@
 'use strict';
 
 exports.__esModule = true;
-var INIT = exports.INIT = '@@redux/INIT';
 var ADD_GROUP = exports.ADD_GROUP = 'ADD_GROUP';
 var REMOVE_GROUP = exports.REMOVE_GROUP = 'REMOVE_GROUP';
 var SET_CONJUNCTION = exports.SET_CONJUNCTION = 'SET_CONJUNCTION';

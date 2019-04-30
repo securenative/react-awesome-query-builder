@@ -15,8 +15,6 @@ const hasChildren = (tree, path) => tree.getIn(expandTreePath(path, 'children1')
 
 // Find in path wheather children with no field value exists
 const hasEmptyChildren = (tree, path) => {
-    // TODO: Delete log
-    console.log('fields', tree.getIn(['children1']).map(item => console.log('i', item.getIn(['properties', 'field']))));
     // TODO: Works on the first level now, need to consider path.
     return (tree.getIn(['children1']) || []).some(item => item.getIn(['properties', 'field']) === null);
 }
@@ -362,7 +360,7 @@ const _validateValue = (config, field, operator, value, valueType, valueSrc) => 
  * @param {*} config 
  */
 function addItemWhenNotEmpty(state, path, config) {
-    const parentPath = path.slice(0, -1);
+    const parentPath = path ? path.slice(0, -1) : null;
 
     // Check in parent path if there are empty rules
     if (!hasEmptyChildren(state, parentPath)) {
@@ -382,7 +380,7 @@ const setField = (state, path, newField, config) => {
     if (!newField)
         return removeItem(state, path);
 
-
+    console.log('set field', state, path);
 
     let updated = state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
         const currentField = current.get('field');
@@ -527,6 +525,17 @@ const emptyDrag = {
     },
 };
 
+/**
+ * When redux initializes
+ * @param {*} state 
+ * @param {*} path 
+ * @param {*} config 
+ */
+function onInit(state, config) {
+    console.log('On init', state, config);
+    return addItemWhenNotEmpty(state, null, config);
+}
+
 
 /**
  * @param {Immutable.Map} state
@@ -536,8 +545,14 @@ export default (config) => {
     const emptyTree = defaultRoot(config);
     const emptyState = Object.assign({}, { tree: emptyTree }, emptyDrag);
 
+    
     return (state = emptyState, action) => {
+        console.log('action', action, state, config);
+
         switch (action.type) {
+            // case constants.INIT:
+            //     return Object.assign({}, state, { tree: onInit(state.tree, config) });
+
             case constants.SET_TREE:
                 return Object.assign({}, state, { tree: action.tree });
 

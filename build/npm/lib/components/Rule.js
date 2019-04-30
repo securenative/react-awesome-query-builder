@@ -10,10 +10,6 @@ var _icon = require('antd/lib/icon');
 
 var _icon2 = _interopRequireDefault(_icon);
 
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
 var _dropdown = require('antd/lib/dropdown');
 
 var _dropdown2 = _interopRequireDefault(_dropdown);
@@ -30,8 +26,6 @@ require('antd/lib/col/style/css');
 
 require('antd/lib/icon/style/css');
 
-require('antd/lib/button/style/css');
-
 require('antd/lib/dropdown/style/css');
 
 require('antd/lib/menu/style/css');
@@ -43,14 +37,6 @@ var _react2 = _interopRequireDefault(_react);
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
-
-var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowCompare);
 
 var _RuleContainer = require('./containers/RuleContainer');
 
@@ -74,15 +60,9 @@ var _OperatorOptions2 = _interopRequireDefault(_OperatorOptions);
 
 var _configUtils = require('../utils/configUtils');
 
-var _size = require('lodash/size');
-
-var _size2 = _interopRequireDefault(_size);
-
 var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
 
 var _reactAddonsPureRenderMixin2 = _interopRequireDefault(_reactAddonsPureRenderMixin);
-
-var _reactRedux = require('react-redux');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -96,7 +76,6 @@ var SubMenu = _menu2.default.SubMenu;
 var MenuItem = _menu2.default.Item;
 var DropdownButton = _dropdown2.default.Button;
 
-var stringify = require('json-stringify-safe');
 var classNames = require('classnames');
 
 var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_Component) {
@@ -164,20 +143,6 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                     ref: 'rule',
                     'data-id': this.props.id
                 },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'rule--header' },
-                    !this.props.config.settings.readonlyMode && _react2.default.createElement(
-                        _button2.default,
-                        {
-                            type: 'danger',
-                            icon: 'close',
-                            onClick: this.props.removeSelf,
-                            size: this.props.config.settings.renderSize || "small"
-                        },
-                        this.props.config.settings.deleteLabel !== undefined ? this.props.config.settings.deleteLabel : "Delete"
-                    )
-                ),
                 this.props.config.settings.canReorder && this.props.treeNodesCnt > 2 && _react2.default.createElement(
                     'span',
                     { className: "qb-drag-handler", onMouseDown: this.handleDraggerMouseDown },
@@ -261,6 +226,24 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                         setOperatorOption: this.props.setOperatorOption,
                         config: this.props.config
                     })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'rule--header' },
+                    !this.props.config.settings.readonlyMode && _react2.default.createElement(_icon2.default, {
+                        type: 'close',
+                        onClick: this.props.removeSelf
+
+                    })
+                    // <Button
+                    //     type="danger"
+                    //     icon="close"
+                    //     onClick={this.props.removeSelf}
+                    //     size={this.props.config.settings.renderSize || "small"}
+                    // >
+                    //     {this.props.config.settings.deleteLabel !== undefined ? this.props.config.settings.deleteLabel : "Delete"}
+                    // </Button>
+
                 )
             );
         }
