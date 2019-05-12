@@ -149,12 +149,6 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
           ref: 'group',
           'data-id': this.props.id
         },
-        _react2.default.createElement(
-          'div',
-          { className: 'group--header' },
-          this.renderHeader(),
-          this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())
-        ),
         this.props.children1 ? _react2.default.createElement(
           'div',
           { className: classNames("group--children", this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : '') },
