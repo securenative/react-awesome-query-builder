@@ -129,6 +129,8 @@ export default class DemoQueryBuilder extends Component {
 
     render() {
         const {tree, ...config_props} = config;
+        
+        Object.assign(config_props.settings, { defaultConj: 'OR' });
                 
         return (
             <div>

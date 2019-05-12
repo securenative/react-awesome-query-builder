@@ -104,6 +104,18 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
   }
 
   _createClass(Group, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      // If the default settings for conjuction changes, set it for group onload
+      var defaultConj = this.props.config.settings.defaultConj;
+
+
+      if (defaultConj) {
+        // Activate selected conjunction change
+        this._getSetConjunctionHandler(defaultConj)();
+      }
+    }
+  }, {
     key: 'getRenderType',
     value: function getRenderType(props) {
       var renderType = void 0;
@@ -137,6 +149,12 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
           ref: 'group',
           'data-id': this.props.id
         },
+        _react2.default.createElement(
+          'div',
+          { className: 'group--header' },
+          this.renderHeader(),
+          this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())
+        ),
         this.props.children1 ? _react2.default.createElement(
           'div',
           { className: classNames("group--children", this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : '') },
@@ -267,7 +285,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
         _react2.default.createElement(
           'span',
           null,
-          i++ === 0 ? 'IF' : 'AND'
+          i++ === 0 ? 'IF' : _this2.props.selectedConjunction
         ),
         _react2.default.createElement(_Item2.default, {
           key: item.get('id'),
@@ -338,7 +356,9 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
               type: item.checked ? "primary" : null,
               onClick: _this2._getSetConjunctionHandler(item.key)
             },
-            item.label
+            item.label,
+            ' ',
+            item.key
           );
         })
       ),

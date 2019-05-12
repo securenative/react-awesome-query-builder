@@ -65,6 +65,16 @@ class Group extends Component {
     }
   }
 
+  componentDidMount() {
+    // If the default settings for conjuction changes, set it for group onload
+    const { defaultConj } = this.props.config.settings;
+
+    if (defaultConj) {
+      // Activate selected conjunction change
+      this._getSetConjunctionHandler(defaultConj)();
+    }
+  }
+
   _getSetConjunctionHandler = (itemKey = null) => {
     const k = '' + itemKey;
     let h = this._setConjunctionHandlers[k];
@@ -144,7 +154,7 @@ class Group extends Component {
 
     return props.children1 ? props.children1.map((item, key) => (
       <div className='rule-wrapper' key={key}>
-        <span>{i++ === 0 ? 'IF' : 'AND'}</span>
+        <span>{i++ === 0 ? 'IF' : this.props.selectedConjunction}</span>
         <Item
           key={item.get('id')}
           id={item.get('id')}
@@ -202,7 +212,7 @@ class Group extends Component {
                 key={item.id}
                 type={item.checked ? "primary" : null}
                 onClick={this._getSetConjunctionHandler(item.key)}
-              >{item.label}</Button>
+              >{item.label} {item.key}</Button>
             ))}
           </ButtonGroup>
         }
@@ -241,16 +251,17 @@ class Group extends Component {
         ref="group"
         data-id={this.props.id}
       >
-        {/* <div className="group--header"> */}
-          {/* {this.renderHeader()} */}
-          {/* {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())} */}
-        {/* </div> */}
-          {this.props.children1 ? (
-            <div className={classNames(
-              "group--children",
-              this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
-            )}>{this.renderChildren()}</div>
-          ) : null}
+        <div className="group--header">
+          {this.renderHeader()}
+          {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())}
+        </div>
+
+        {this.props.children1 ? (
+          <div className={classNames(
+            "group--children",
+            this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
+          )}>{this.renderChildren()}</div>
+        ) : null}
         {!this.isGroupTopPosition() && (
           <div className='group--footer'>
             {this.renderGroup(this.getGroupPositionClass())}

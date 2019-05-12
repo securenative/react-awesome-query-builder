@@ -820,6 +820,7 @@ export default {
         hideConjForOne: true,
         renderSize: 'default',
         renderConjsAsRadios: false,
+        defaultConj: 'AND',
         renderFieldAndOpAsDropdown: false,
         customFieldSelectProps: {
             showSearch: true
