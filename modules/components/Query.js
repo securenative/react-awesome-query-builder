@@ -163,6 +163,8 @@ export default class Query extends Component {
         let config = { conjunctions, fields, types, operators, widgets, settings };
         config = extendConfig(config);
 
+        console.log('Settings change', settings.defaultConj, 'config', config);
+
         return (
             <LocaleProvider locale={config.settings.locale.antd}>
                 <Provider store={this.state.store}>

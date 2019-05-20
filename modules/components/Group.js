@@ -65,11 +65,12 @@ class Group extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillReceiveProps() {
     // If the default settings for conjuction changes, set it for group onload
     const { defaultConj } = this.props.config.settings;
 
     if (defaultConj) {
+      console.log('Changing operator', defaultConj);
       // Activate selected conjunction change
       this._getSetConjunctionHandler(defaultConj)();
     }

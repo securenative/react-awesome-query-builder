@@ -104,13 +104,14 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
   }
 
   _createClass(Group, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps() {
       // If the default settings for conjuction changes, set it for group onload
       var defaultConj = this.props.config.settings.defaultConj;
 
 
       if (defaultConj) {
+        console.log('Changing operator', defaultConj);
         // Activate selected conjunction change
         this._getSetConjunctionHandler(defaultConj)();
       }

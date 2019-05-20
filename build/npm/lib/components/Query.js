@@ -239,6 +239,8 @@ var Query = (_temp2 = _class2 = function (_Component2) {
             var config = { conjunctions: conjunctions, fields: fields, types: types, operators: operators, widgets: widgets, settings: settings };
             config = (0, _configUtils.extendConfig)(config);
 
+            console.log('Settings change', settings.defaultConj, 'config', config);
+
             return _react2.default.createElement(
                 _localeProvider2.default,
                 { locale: config.settings.locale.antd },
