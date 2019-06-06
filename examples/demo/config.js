@@ -820,6 +820,7 @@ export default {
         hideConjForOne: true,
         renderSize: 'default',
         renderConjsAsRadios: false,
+        defaultConj: 'AND',
         renderFieldAndOpAsDropdown: false,
         customFieldSelectProps: {
             showSearch: true
@@ -829,7 +830,7 @@ export default {
         clearValueOnChangeField: false, //false - if prev & next fields have same type (widget), keep
         clearValueOnChangeOp: false,
         setDefaultFieldAndOp: false,
-        maxNesting: 3,
+        maxNesting: 1,
         fieldSeparator: '.',
         fieldSeparatorDisplay: '->',
         showLabels: false,

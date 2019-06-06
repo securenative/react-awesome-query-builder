@@ -4,7 +4,7 @@ import shallowCompare from 'react-addons-shallow-compare';
 import map from 'lodash/map';
 import startsWith from 'lodash/startsWith'
 import GroupContainer from './containers/GroupContainer';
-import { Row, Col, Icon, Button, Radio, Popover } from 'antd';
+import { Row, Col, Icon, Button, Radio } from 'antd';
 const ButtonGroup = Button.Group;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -62,6 +62,17 @@ class Group extends Component {
     this._setConjunctionHandlers = {};
     this.state = {
       popoverVisible: false
+    }
+  }
+
+  componentWillReceiveProps() {
+    // If the default settings for conjuction changes, set it for group onload
+    const { defaultConj } = this.props.config.settings;
+
+    if (defaultConj) {
+      console.log('Changing operator', defaultConj);
+      // Activate selected conjunction change
+      this._getSetConjunctionHandler(defaultConj)();
     }
   }
 
@@ -140,21 +151,26 @@ class Group extends Component {
 
   renderChildren = () => {
     let props = this.props;
-    return props.children1 ? props.children1.map((item) => (
-      <Item
-        key={item.get('id')}
-        id={item.get('id')}
-        //path={props.path.push(item.get('id'))}
-        path={item.get('path')}
-        type={item.get('type')}
-        properties={item.get('properties')}
-        config={props.config}
-        actions={props.actions}
-        children1={item.get('children1')}
-        //tree={props.tree}
-        treeNodesCnt={props.treeNodesCnt}
-        onDragStart={props.onDragStart}
-      />
+    let i = 0;
+
+    return props.children1 ? props.children1.map((item, key) => (
+      <div className='rule-wrapper' key={key}>
+        <span>{i++ === 0 ? 'IF' : this.props.selectedConjunction}</span>
+        <Item
+          key={item.get('id')}
+          id={item.get('id')}
+          //path={props.path.push(item.get('id'))}
+          path={item.get('path')}
+          type={item.get('type')}
+          properties={item.get('properties')}
+          config={props.config}
+          actions={props.actions}
+          children1={item.get('children1')}
+          //tree={props.tree}
+          treeNodesCnt={props.treeNodesCnt}
+          onDragStart={props.onDragStart}
+        />
+      </div>
     )).toList() : null;
   }
 
@@ -197,7 +213,7 @@ class Group extends Component {
                 key={item.id}
                 type={item.checked ? "primary" : null}
                 onClick={this._getSetConjunctionHandler(item.key)}
-              >{item.label}</Button>
+              >{item.label} {item.key}</Button>
             ))}
           </ButtonGroup>
         }
@@ -236,28 +252,17 @@ class Group extends Component {
         ref="group"
         data-id={this.props.id}
       >
-        <div className="group--header">
-          {/* {this.renderHeader()} */}
+        {/* <div className="group--header">
+          {this.renderHeader()}
           {this.isGroupTopPosition() && this.renderGroup(this.getGroupPositionClass())}
-        </div>
-        <div className='items'>
-          <div className='btns'>
-            <Popover
-              content={this.renderHeader()}
-              trigger="click"
-              visible={this.state.popoverVisible}
-              onVisibleChange={this.handleVisibleChange}
-            >
-              <Button>{this.props.selectedConjunction}</Button>
-            </Popover>
-          </div>
-          {this.props.children1 ? (
-            <div className={classNames(
-              "group--children",
-              this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
-            )}>{this.renderChildren()}</div>
-          ) : null}
-        </div>
+        </div> */}
+
+        {this.props.children1 ? (
+          <div className={classNames(
+            "group--children",
+            this.props.children1.size < 2 && this.props.config.settings.hideConjForOne ? 'hide--line' : ''
+          )}>{this.renderChildren()}</div>
+        ) : null}
         {!this.isGroupTopPosition() && (
           <div className='group--footer'>
             {this.renderGroup(this.getGroupPositionClass())}

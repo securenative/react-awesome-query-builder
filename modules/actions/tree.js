@@ -19,6 +19,17 @@ export const setTree = (config, tree) => ({
 /**
  * @param {object} config
  * @param {Immutable.List} path
+ */
+export const onInitValue = (config, tree, path) => ({
+  type: constants.ON_INIT_VALUE,
+  tree,
+  path,
+  config: config
+});
+
+/**
+ * @param {object} config
+ * @param {Immutable.List} path
  * @param {object} properties
  */
 export const addRule = (config, path, properties) => ({

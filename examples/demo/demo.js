@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {Query, Builder, Preview, Utils} from '../../build/npm/lib';
 const {queryBuilderFormat, queryString, mongodbFormat} = Utils;
 import config from './config';
@@ -74,6 +74,14 @@ let ruleset = {
 
 
 export default class DemoQueryBuilder extends Component {
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        operator: 'OR'
+      }
+    }
+
     getChildren(props) {
         const jsonStyle = { backgroundColor: 'darkgrey', margin: '10px', padding: '10px' } 
         return (
@@ -129,9 +137,13 @@ export default class DemoQueryBuilder extends Component {
 
     render() {
         const {tree, ...config_props} = config;
+        //const operator  = 'OR';
+        const {operator} = this.state;
+        Object.assign(config_props.settings, { defaultConj: operator });
                 
         return (
             <div>
+                <button onClick={() => this.setState({ operator: operator === 'AND' ? 'OR' : 'AND' })}>Toggle operator {operator}</button>
                 <Query 
                     value={loadTree(initValue)}
                     {...config_props} 

@@ -72,10 +72,23 @@
   border: 1px solid #DCC896;
 }
 
-.rule {
+.query-builder .rule {
+  display: flex;
+  align-items: center;
   background-color: white;
   border: 1px solid transparent;
   padding: 10px;
+
+  .rule--header {
+    margin-left: 20px;
+    float: none;
+    display: flex;
+    align-items: center;
+
+    .anticon {
+      cursor: pointer;
+    }
+  }
 }
 
 .group-or-rule {

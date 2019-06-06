@@ -13,11 +13,10 @@ var stringify = require('json-stringify-safe');
 
 const hasChildren = (tree, path) => tree.getIn(expandTreePath(path, 'children1')).size > 0;
 
+// Find in path wheather children with no field value exists
 const hasEmptyChildren = (tree, path) => {
-    // TODO: Find in path wheather children with no values exist
-    const chil = tree.getIn(expandTreePath(path, 'properties')).toArray();
-    console.log('has empty', chil);
-    return chil.size > 0;
+    // TODO: Works on the first level now, need to consider path.
+    return (tree.getIn(['children1']) || []).some(item => item.getIn(['properties', 'field']) === null);
 }
 
 /**
@@ -72,6 +71,9 @@ const removeRule = (state, path, config) => {
         state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config));
     }
     state = fixPathsInTree(state);
+
+    state = addItemWhenNotEmpty(state, path, config);
+
     return state;
 };
 
@@ -355,6 +357,24 @@ const _validateValue = (config, field, operator, value, valueType, valueSrc) => 
 };
 
 /**
+ * Adds item to list group, when all fields are filled
+ * @param {*} state - current state
+ * @param {*} path 
+ * @param {*} config 
+ */
+function addItemWhenNotEmpty(state, path, config) {
+    const parentPath = path ? path.slice(0, -1) : null;
+
+    // Check in parent path if there are empty rules
+    if (!hasEmptyChildren(state, parentPath)) {
+        state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config));
+        state = fixPathsInTree(state);
+    }
+
+    return state;
+}
+
+/**
  * @param {Immutable.Map} state
  * @param {Immutable.List} path
  * @param {string} field
@@ -363,18 +383,7 @@ const setField = (state, path, newField, config) => {
     if (!newField)
         return removeItem(state, path);
 
-    // TODO: Find how to add new field when no empty fields
-    // if (isEmptyGroup && !canLeaveEmpty) {
-    const parentPath = path.slice(0, -1);
-    if (hasEmptyChildren(state, parentPath)) {
-        // TODO: Check in parent path if there are empty rules - if not - add one
-        state = addItem(state, parentPath, 'rule', uuid(), defaultRuleProperties(config));
-        // }
-        state = fixPathsInTree(state);
-    }
-    console.log('set field', path, 'field?', newField);
-
-    return state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
+    let updated = state.updateIn(expandTreePath(path, 'properties'), (map) => map.withMutations((current) => {
         const currentField = current.get('field');
         const currentOperator = current.get('operator');
         const currentOperatorOptions = current.get('operatorOptions');
@@ -406,8 +415,6 @@ const setField = (state, path, newField, config) => {
         let { canReuseValue, newValue, newValueSrc, newValueType } = _getNewValueForFieldOp(config, config, current, newField, newOperator, 'field');
         let newOperatorOptions = canReuseValue ? currentOperatorOptions : defaultOperatorOptions(config, newOperator, newField);
 
-        console.log('val', newValue);
-
         return current
             .set('field', newField)
             .set('operator', newOperator)
@@ -416,6 +423,12 @@ const setField = (state, path, newField, config) => {
             .set('valueSrc', newValueSrc)
             .set('valueType', newValueType);
     }))
+
+
+    // Add new item if all fields are filled
+    updated = addItemWhenNotEmpty(updated, path, config);
+
+    return updated;
 };
 
 /**
@@ -513,6 +526,16 @@ const emptyDrag = {
     },
 };
 
+/**
+ * When query builder initializes
+ * @param {*} state 
+ * @param {*} path 
+ * @param {*} config 
+ */
+function onInit(state, path, config) {
+    return addItemWhenNotEmpty(state, path, config);
+}
+
 
 /**
  * @param {Immutable.Map} state
@@ -522,8 +545,12 @@ export default (config) => {
     const emptyTree = defaultRoot(config);
     const emptyState = Object.assign({}, { tree: emptyTree }, emptyDrag);
 
+    
     return (state = emptyState, action) => {
         switch (action.type) {
+            case constants.ON_INIT_VALUE:
+                return Object.assign({}, state, { tree: onInit(state.tree, action.path, config) });
+
             case constants.SET_TREE:
                 return Object.assign({}, state, { tree: action.tree });
 

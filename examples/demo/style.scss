@@ -2,44 +2,55 @@
 @import '../../css/compact_styles.scss';
 @import '../../css/denormalize.scss';
 
+$condition_label_width: 60px;
+$condition_label_height: 30px;
+$condition_label_background: #CCC;
+$condition_line_space: 30px;
+
 .group {
   background: none;
   border: solid 1px transparent;
   border-radius: 0;
   text-align: left;
 
-
-  .items {
+  .rule-wrapper {
     display: flex;
     align-items: center;
 
-    .btns {
-      display: inline-block;
-      vertical-align: middle;
-      margin-top: -25px;
+    // Condition label
+    & > span {
+        display: flex;
+        width: $condition_label_width;
+        height: $condition_label_height;
+        background: $condition_label_background;
+        justify-content: center;
+        align-items: center;
+        border-radius: 3px;
+        margin-top: -6px;
+        position: relative;
 
-      button {
-        width: 70px;
-      }
+        &::after {
+          content: ' ';
+          position: absolute;
+          top: $condition_label_height;
+          left: $condition_label_width / 2 - 1;
+          width: 1px;
+          height: $condition_line_space;
+          border: solid 2px $condition_label_background;
+        }
     }
   }
 
-}
-
-.rule {
-  display: inline-block;
-
-  .rule--header {
-    margin-left: 20px;
+  // Don't display line for last item
+  .rule-wrapper:last-child {
+    span::after {
+      visibility: hidden;
+    }
   }
-}                                                                             
 
-
-.query-builder {
-
-  & > .group-or-rule-container:first-child > .group-or-rule {
-    & > .items > .btns {
-      margin-top: -4px;
+  .rule--field, .rule--value {
+    .ant-select, .ant-input-number, input {
+      min-width: 150px;
     }
   }
 }
