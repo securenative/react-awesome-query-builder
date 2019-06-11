@@ -58,7 +58,6 @@ export default class IPRange extends Component {
     let [ipNum, cidrNum] = value || [null, null];
     const [placeholder1, placeholder2] = this.props.placeholders || this.props.valueLabels || [];
     const [defaultVal1, defaultVal2] = this.props.defaultValues || [];
-    console.log('ip widget', this.props, this.props.defaultValues);
 
     // If default value exists & now original value
     // TODO: Need to do the same with IP default value
@@ -69,7 +68,7 @@ export default class IPRange extends Component {
     const inputStyleOverride = {
       border: 'none',
       height: '100%',
-      minWidth: '110px'
+      minWidth: '120px'
     }
 
     return (
@@ -102,7 +101,7 @@ export default class IPRange extends Component {
             placeholder={placeholder2}
             onChange={this.handleChangeCIDR}
             className={'small-input'}
-            style={inputStyleOverride}
+            style={{...inputStyleOverride, minWidth: '60px'}}
             {...customProps}
           />
         </div>
