@@ -3,13 +3,13 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _inputNumber = require('antd/lib/input-number');
-
-var _inputNumber2 = _interopRequireDefault(_inputNumber);
-
 var _col = require('antd/lib/col');
 
 var _col2 = _interopRequireDefault(_col);
+
+var _inputNumber = require('antd/lib/input-number');
+
+var _inputNumber2 = _interopRequireDefault(_inputNumber);
 
 var _input = require('antd/lib/input');
 
@@ -23,9 +23,9 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _class, _temp2;
 
-require('antd/lib/input-number/style/css');
-
 require('antd/lib/col/style/css');
+
+require('antd/lib/input-number/style/css');
 
 require('antd/lib/input/style/css');
 
@@ -122,26 +122,17 @@ var IPRange = (_temp2 = _class = function (_Component) {
         this.handleChangeCIDR(defaultVal2);
       }
 
-      // if (value && (ipNum == undefined || cidrNum == undefined)) {
-      //   // happens if we change value source - this leads to incomplete slider value, fix it:
-      //   if (ipNum == undefined)
-      //     this.handleChangeCIDR(cidrNum);
-      //   if (cidrNum == undefined)
-      //     this.handleChangeIpNum(ipNum);
-      //   return null;
-      // }
-
       var inputStyleOverride = {
         border: 'none',
         height: '100%',
-        minWidth: '60px'
+        minWidth: '110px'
       };
 
       return _react2.default.createElement(
         _col2.default,
         { style: { display: 'inline-flex', alignItems: 'center', border: '1px solid #d9d9d9', borderRadius: '4px' } },
         _react2.default.createElement(
-          _col2.default,
+          'div',
           { style: { marginRight: '5px' } },
           _react2.default.createElement(_input2.default, _extends({
             size: this.props.config.settings.renderSize || "small",
@@ -154,7 +145,7 @@ var IPRange = (_temp2 = _class = function (_Component) {
           }, customProps))
         ),
         _react2.default.createElement(
-          _col2.default,
+          'div',
           { style: { marginRight: '5px', lineHeight: '20px' } },
           _react2.default.createElement(
             'span',
@@ -163,7 +154,7 @@ var IPRange = (_temp2 = _class = function (_Component) {
           )
         ),
         _react2.default.createElement(
-          _col2.default,
+          'div',
           { style: { marginRight: '5px' } },
           _react2.default.createElement(_inputNumber2.default, _extends({
             size: this.props.config.settings.renderSize || "small",
@@ -176,10 +167,10 @@ var IPRange = (_temp2 = _class = function (_Component) {
             value: cidrNum || defaultVal2,
             placeholder: placeholder2,
             onChange: this.handleChangeCIDR,
-            style: _extends({}, inputStyleOverride, { width: '50px' })
+            className: 'small-input',
+            style: inputStyleOverride
           }, customProps))
-        ),
-        _react2.default.createElement(_col2.default, { style: { clear: 'both' } })
+        )
       );
     }
   }]);

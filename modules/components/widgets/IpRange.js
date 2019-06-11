@@ -69,12 +69,12 @@ export default class IPRange extends Component {
     const inputStyleOverride = {
       border: 'none',
       height: '100%',
-      minWidth: '60px'
+      minWidth: '110px'
     }
 
     return (
       <Col style={{display: 'inline-flex', alignItems: 'center', border: '1px solid #d9d9d9', borderRadius: '4px'}}>
-        <Col style={{ marginRight: '5px'}}>
+        <div style={{ marginRight: '5px'}}>
           <Input
             size={this.props.config.settings.renderSize || "small"}
             ref="ipNum"
@@ -85,11 +85,11 @@ export default class IPRange extends Component {
             style={inputStyleOverride}
             {...customProps}
           />
-        </Col>
-        <Col style={{ marginRight: '5px', lineHeight: '20px'}}>
+        </div>
+        <div style={{ marginRight: '5px', lineHeight: '20px'}}>
           <span>{ this.props.textSeparator }</span>
-        </Col>
-        <Col style={{ marginRight: '5px'}}>
+        </div>
+        <div style={{ marginRight: '5px'}}>
           <InputNumber
             size={this.props.config.settings.renderSize || "small"}
             ref="cidr"
@@ -101,11 +101,11 @@ export default class IPRange extends Component {
             value={cidrNum || defaultVal2}
             placeholder={placeholder2}
             onChange={this.handleChangeCIDR}
-            style={{...inputStyleOverride, width: '50px'}}
+            className={'small-input'}
+            style={inputStyleOverride}
             {...customProps}
           />
-        </Col>
-        <Col style={{clear: 'both'}} />
+        </div>
       </Col>
     );
   }
