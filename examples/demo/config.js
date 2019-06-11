@@ -18,6 +18,7 @@ const {
 const { ProximityOperator } = Operators;
 import moment from 'moment';
 import en_US from 'antd/lib/locale-provider/en_US';
+import { IpRangeWidget } from '../../modules/components/widgets';
 // import ru_RU from 'antd/lib/locale-provider/ru_RU';
 
 export default {
@@ -135,6 +136,20 @@ export default {
                         valuePlaceholder: "Use input or slider",
                     }
                 }
+            },
+        },
+        ip: {
+            label: 'IP',
+            type: 'text',
+            preferWidgets: ['ip', 'ipRange'],
+            operators: [
+                "equal",
+                "not_equal",
+            ],
+            valueSources: ['value'],
+            //overrides
+            widgets: {
+                
             },
         },
         date: {
@@ -255,6 +270,13 @@ export default {
                         valueLabel: "Text",
                         valuePlaceholder: "Enter text",
                     }
+                },
+                ip: {
+                    defaultOperator: 'equal',
+                    operators: [
+                        'equal',
+                        'not_equal',
+                    ]
                 },
                 field: {
                     operators: [
@@ -711,6 +733,36 @@ export default {
             customProps: {
                 width: '300px'
             }
+        },
+        ip: {
+            type: 'text',
+            valueSrc: 'value',
+            factory: (props) => <IpRangeWidget {...props} />,
+            valueLabels: ["IP Number", "CIDR"],
+            formatValue: (val, fieldDef, wgtDef, isForDisplay) => {
+                const [ip = 0,cidr = 0] = val || [];
+                return `${ip}/${cidr}`;
+            },
+            // validateValue: (val, fieldDef) => {
+            //     const [ip, cidr] = val;
+
+            //     const ipValid = ip.split('.').every(b => {
+            //         const block = parseInt(block);
+            //         return block >= 0 && block <= 256;
+            //     })
+
+            //     console.log('IP val validation', ip, cidr);
+            //     return ipValid && cidr >=0 && cidr <= 32;
+            // },
+            defaultValues: [
+                null,
+                32,
+            ],
+            textSeparator: '/',
+            // customProps: {
+            //     width: '300px'
+            // },
+            
         },
         rangeslider: {
             type: "number",

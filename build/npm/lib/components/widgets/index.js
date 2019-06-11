@@ -101,4 +101,13 @@ Object.defineProperty(exports, 'ValueFieldWidget', {
   }
 });
 
+var _IpRange = require('./IpRange');
+
+Object.defineProperty(exports, 'IpRangeWidget', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_IpRange).default;
+  }
+});
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
