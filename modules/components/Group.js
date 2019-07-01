@@ -70,7 +70,6 @@ class Group extends Component {
     const { defaultConj } = this.props.config.settings;
 
     if (defaultConj) {
-      console.log('Changing operator', defaultConj);
       // Activate selected conjunction change
       this._getSetConjunctionHandler(defaultConj)();
     }
