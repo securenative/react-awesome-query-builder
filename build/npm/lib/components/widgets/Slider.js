@@ -3,29 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _slider = require('antd/lib/slider');
-
-var _slider2 = _interopRequireDefault(_slider);
-
-var _col = require('antd/lib/col');
-
-var _col2 = _interopRequireDefault(_col);
-
-var _inputNumber = require('antd/lib/input-number');
-
-var _inputNumber2 = _interopRequireDefault(_inputNumber);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp2;
-
-require('antd/lib/slider/style/css');
-
-require('antd/lib/col/style/css');
-
-require('antd/lib/input-number/style/css');
 
 var _react = require('react');
 
@@ -38,6 +20,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _antd = require('antd');
 
 require('antd/lib/date-picker/style');
 
@@ -93,12 +77,12 @@ var SliderWidget = (_temp2 = _class = function (_Component) {
       var marks = fieldSettings.marks === undefined ? this.defaultProps.marks : fieldSettings.marks;
 
       return _react2.default.createElement(
-        _col2.default,
+        _antd.Col,
         { style: { display: 'inline-flex' } },
         _react2.default.createElement(
-          _col2.default,
+          _antd.Col,
           { style: { float: 'left', marginRight: '5px' } },
-          _react2.default.createElement(_inputNumber2.default, _extends({
+          _react2.default.createElement(_antd.InputNumber, _extends({
             size: this.props.config.settings.renderSize || "small",
             ref: 'num',
             value: value,
@@ -110,9 +94,9 @@ var SliderWidget = (_temp2 = _class = function (_Component) {
           }, customProps))
         ),
         _react2.default.createElement(
-          _col2.default,
+          _antd.Col,
           { style: { float: 'left', width: customProps.width || '300px' } },
-          _react2.default.createElement(_slider2.default, _extends({
+          _react2.default.createElement(_antd.Slider, _extends({
             ref: 'slider',
             value: value,
             tipFormatter: function tipFormatter(val) {
@@ -126,7 +110,7 @@ var SliderWidget = (_temp2 = _class = function (_Component) {
             onChange: this.handleChange
           }, customProps))
         ),
-        _react2.default.createElement(_col2.default, { style: { clear: 'both' } })
+        _react2.default.createElement(_antd.Col, { style: { clear: 'both' } })
       );
     }
   }]);

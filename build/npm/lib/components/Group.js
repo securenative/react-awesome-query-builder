@@ -3,27 +3,9 @@
 exports.__esModule = true;
 exports.groupActionsPositionList = undefined;
 
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _radio = require('antd/lib/radio');
-
-var _radio2 = _interopRequireDefault(_radio);
-
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _class2, _temp, _initialiseProps;
-
-require('antd/lib/icon/style/css');
-
-require('antd/lib/radio/style/css');
-
-require('antd/lib/button/style/css');
 
 var _react = require('react');
 
@@ -49,6 +31,8 @@ var _GroupContainer = require('./containers/GroupContainer');
 
 var _GroupContainer2 = _interopRequireDefault(_GroupContainer);
 
+var _antd = require('antd');
+
 var _immutable = require('immutable');
 
 var _immutable2 = _interopRequireDefault(_immutable);
@@ -71,9 +55,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var ButtonGroup = _button2.default.Group;
-var RadioButton = _radio2.default.Button;
-var RadioGroup = _radio2.default.Group;
+var ButtonGroup = _antd.Button.Group;
+var RadioButton = _antd.Radio.Button;
+var RadioGroup = _antd.Radio.Group;
 var classNames = require('classnames');
 var groupActionsPositionList = exports.groupActionsPositionList = {
   topLeft: 'group--actions--tl',
@@ -111,7 +95,6 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
 
 
       if (defaultConj) {
-        console.log('Changing operator', defaultConj);
         // Activate selected conjunction change
         this._getSetConjunctionHandler(defaultConj)();
       }
@@ -238,7 +221,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
           size: _this2.props.config.settings.renderSize || "small"
         },
         !_this2.props.config.settings.readonlyMode && _react2.default.createElement(
-          _button2.default,
+          _antd.Button,
           {
             icon: 'plus',
             className: 'action action--ADD-RULE',
@@ -247,7 +230,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
           _this2.props.config.settings.addRuleLabel || "Add rule"
         ),
         !_this2.props.config.settings.readonlyMode && _this2.props.allowFurtherNesting ? _react2.default.createElement(
-          _button2.default,
+          _antd.Button,
           {
             className: 'action action--ADD-GROUP',
             icon: 'plus-circle-o',
@@ -256,7 +239,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
           _this2.props.config.settings.addGroupLabel || "Add group"
         ) : null,
         !_this2.props.config.settings.readonlyMode && !_this2.props.isRoot ? _react2.default.createElement(
-          _button2.default,
+          _antd.Button,
           {
             type: 'danger',
             icon: 'delete',
@@ -333,7 +316,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
           disabled: _this2.props.children1.size < 2
         },
         _this2.props.config.settings.showNot && _react2.default.createElement(
-          _button2.default,
+          _antd.Button,
           {
             onClick: function onClick(ev) {
               return _this2.props.setNot(ev, !_this2.props.not);
@@ -344,7 +327,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
         ),
         (0, _map2.default)(_this2.props.conjunctionOptions, function (item, index) {
           return _react2.default.createElement(
-            _button2.default,
+            _antd.Button,
             {
               disabled: _this2.props.children1.size < 2,
               key: item.id,
@@ -361,7 +344,7 @@ var Group = (0, _GroupContainer2.default)(_class = (_temp = _class2 = function (
         'span',
         { className: "qb-drag-handler", onMouseDown: _this2.handleDraggerMouseDown },
         ' ',
-        _react2.default.createElement(_icon2.default, { type: 'bars' }),
+        _react2.default.createElement(_antd.Icon, { type: 'bars' }),
         ' '
       )
     );

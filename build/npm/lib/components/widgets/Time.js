@@ -3,17 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _timePicker = require('antd/lib/time-picker');
-
-var _timePicker2 = _interopRequireDefault(_timePicker);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp, _initialiseProps;
-
-require('antd/lib/time-picker/style/css');
 
 var _react = require('react');
 
@@ -22,6 +16,8 @@ var _react2 = _interopRequireDefault(_react);
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _antd = require('antd');
 
 var _moment = require('moment');
 
@@ -72,7 +68,7 @@ var TimeWidget = (_temp = _class = function (_Component) {
             var dateValue = value ? (0, _moment2.default)(value, valueFormat) : null;
             var customProps = this.props.customProps || {};
 
-            return _react2.default.createElement(_timePicker2.default, _extends({
+            return _react2.default.createElement(_antd.TimePicker, _extends({
                 use12Hours: use12Hours,
                 key: 'widget-time',
                 size: this.props.config.settings.renderSize || "small",

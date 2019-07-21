@@ -3,17 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _localeProvider = require('antd/lib/locale-provider');
-
-var _localeProvider2 = _interopRequireDefault(_localeProvider);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp, _class2, _temp2;
-
-require('antd/lib/locale-provider/style/css');
 
 var _react = require('react');
 
@@ -46,6 +40,8 @@ var _validation = require('../utils/validation');
 var _queryString = require('../utils/queryString');
 
 var _defaultUtils = require('../utils/defaultUtils');
+
+var _antd = require('antd');
 
 var _immutable = require('immutable');
 
@@ -239,10 +235,8 @@ var Query = (_temp2 = _class2 = function (_Component2) {
             var config = { conjunctions: conjunctions, fields: fields, types: types, operators: operators, widgets: widgets, settings: settings };
             config = (0, _configUtils.extendConfig)(config);
 
-            console.log('Settings change', settings.defaultConj, 'config', config);
-
             return _react2.default.createElement(
-                _localeProvider2.default,
+                _antd.LocaleProvider,
                 { locale: config.settings.locale.antd },
                 _react2.default.createElement(
                     _reactRedux.Provider,

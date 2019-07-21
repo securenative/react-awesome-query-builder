@@ -3,18 +3,6 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _col = require('antd/lib/col');
-
-var _col2 = _interopRequireDefault(_col);
-
-var _inputNumber = require('antd/lib/input-number');
-
-var _inputNumber2 = _interopRequireDefault(_inputNumber);
-
-var _input = require('antd/lib/input');
-
-var _input2 = _interopRequireDefault(_input);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
@@ -22,12 +10,6 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp2;
-
-require('antd/lib/col/style/css');
-
-require('antd/lib/input-number/style/css');
-
-require('antd/lib/input/style/css');
 
 var _react = require('react');
 
@@ -40,6 +22,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _antd = require('antd');
 
 require('antd/lib/date-picker/style');
 
@@ -114,10 +98,10 @@ var IPRange = (_temp2 = _class = function (_Component) {
           defaultVal1 = _ref7[0],
           defaultVal2 = _ref7[1];
 
-      console.log('ip widget', this.props, this.props.defaultValues);
-
       // If default value exists & now original value
       // TODO: Need to do the same with IP default value
+
+
       if (cidrNum === undefined && defaultVal2 !== undefined) {
         this.handleChangeCIDR(defaultVal2);
       }
@@ -125,16 +109,16 @@ var IPRange = (_temp2 = _class = function (_Component) {
       var inputStyleOverride = {
         border: 'none',
         height: '100%',
-        minWidth: '110px'
+        minWidth: '120px'
       };
 
       return _react2.default.createElement(
-        _col2.default,
+        _antd.Col,
         { style: { display: 'inline-flex', alignItems: 'center', border: '1px solid #d9d9d9', borderRadius: '4px' } },
         _react2.default.createElement(
           'div',
           { style: { marginRight: '5px' } },
-          _react2.default.createElement(_input2.default, _extends({
+          _react2.default.createElement(_antd.Input, _extends({
             size: this.props.config.settings.renderSize || "small",
             ref: 'ipNum',
             key: 'ipNum',
@@ -156,7 +140,7 @@ var IPRange = (_temp2 = _class = function (_Component) {
         _react2.default.createElement(
           'div',
           { style: { marginRight: '5px' } },
-          _react2.default.createElement(_inputNumber2.default, _extends({
+          _react2.default.createElement(_antd.InputNumber, _extends({
             size: this.props.config.settings.renderSize || "small",
             ref: 'cidr',
             key: 'cidr',
@@ -168,7 +152,7 @@ var IPRange = (_temp2 = _class = function (_Component) {
             placeholder: placeholder2,
             onChange: this.handleChangeCIDR,
             className: 'small-input',
-            style: inputStyleOverride
+            style: _extends({}, inputStyleOverride, { minWidth: '60px' })
           }, customProps))
         )
       );

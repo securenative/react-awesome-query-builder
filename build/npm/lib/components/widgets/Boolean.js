@@ -3,17 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _switch = require('antd/lib/switch');
-
-var _switch2 = _interopRequireDefault(_switch);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp;
-
-require('antd/lib/switch/style/css');
 
 var _react = require('react');
 
@@ -26,6 +20,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _antd = require('antd');
 
 var _reactAddonsShallowCompare = require('react-addons-shallow-compare');
 
@@ -61,7 +57,7 @@ var BooleanWidget = (_temp = _class = function (_Component) {
         value: function render() {
             var customProps = this.props.customProps || {};
 
-            return _react2.default.createElement(_switch2.default, _extends({
+            return _react2.default.createElement(_antd.Switch, _extends({
                 ref: 'switch',
                 checkedChildren: this.props.labelYes || null,
                 unCheckedChildren: this.props.labelNo || null,

@@ -3,47 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _tooltip = require('antd/lib/tooltip');
-
-var _tooltip2 = _interopRequireDefault(_tooltip);
-
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _dropdown = require('antd/lib/dropdown');
-
-var _dropdown2 = _interopRequireDefault(_dropdown);
-
-var _menu = require('antd/lib/menu');
-
-var _menu2 = _interopRequireDefault(_menu);
-
-var _select = require('antd/lib/select');
-
-var _select2 = _interopRequireDefault(_select);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp;
-
-require('antd/lib/tooltip/style/css');
-
-require('antd/lib/button/style/css');
-
-require('antd/lib/icon/style/css');
-
-require('antd/lib/dropdown/style/css');
-
-require('antd/lib/menu/style/css');
-
-require('antd/lib/select/style/css');
 
 var _react = require('react');
 
@@ -60,6 +24,8 @@ var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowComp
 var _configUtils = require('../utils/configUtils');
 
 var _stuff = require('../utils/stuff');
+
+var _antd = require('antd');
 
 var _map = require('lodash/map');
 
@@ -85,12 +51,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Option = _select2.default.Option,
-    OptGroup = _select2.default.OptGroup;
+var Option = _antd.Select.Option,
+    OptGroup = _antd.Select.OptGroup;
 
-var SubMenu = _menu2.default.SubMenu;
-var MenuItem = _menu2.default.Item;
-var DropdownButton = _dropdown2.default.Button;
+var SubMenu = _antd.Menu.SubMenu;
+var MenuItem = _antd.Menu.Item;
+var DropdownButton = _antd.Dropdown.Button;
 var Field = (_temp = _class = function (_Component) {
     _inherits(Field, _Component);
 
@@ -236,18 +202,18 @@ var Field = (_temp = _class = function (_Component) {
             var maxLabelsLength = this.props.config.settings.maxLabelsLength || 100;
             btnLabel = (0, _stuff.truncateString)(btnLabel, maxLabelsLength);
             var toggler = _react2.default.createElement(
-                _button2.default,
+                _antd.Button,
                 {
                     size: this.props.config.settings.renderSize || "small"
                 },
                 btnLabel,
                 ' ',
-                _react2.default.createElement(_icon2.default, { type: 'down' })
+                _react2.default.createElement(_antd.Icon, { type: 'down' })
             );
 
             if (fullLabel && fullLabel != label) {
                 toggler = _react2.default.createElement(
-                    _tooltip2.default,
+                    _antd.Tooltip,
                     {
                         placement: 'top',
                         title: fullLabel
@@ -282,7 +248,7 @@ var Field = (_temp = _class = function (_Component) {
             var customProps = this.props.customProps || {};
 
             var fieldSelect = _react2.default.createElement(
-                _select2.default,
+                _antd.Select,
                 _extends({
                     dropdownAlign: dropdownPlacement ? _stuff.BUILT_IN_PLACEMENTS[dropdownPlacement] : undefined,
                     dropdownMatchSelectWidth: false,
@@ -311,10 +277,10 @@ var Field = (_temp = _class = function (_Component) {
 
             var fieldMenuItems = this.buildMenuItems(fieldOptions);
             var fieldMenu = _react2.default.createElement(
-                _menu2.default,
-                _extends({
-                    //size={this.props.config.settings.renderSize || "small"}
-                    selectedKeys: selectedFieldKeys,
+                _antd.Menu
+                //size={this.props.config.settings.renderSize || "small"}
+                ,
+                _extends({ selectedKeys: selectedFieldKeys,
                     onClick: this.handleFieldMenuSelect
                 }, customProps),
                 fieldMenuItems
@@ -322,7 +288,7 @@ var Field = (_temp = _class = function (_Component) {
             var fieldToggler = this.buildMenuToggler(placeholder, selectedFieldFullLabel, this.curFieldOpts().label2);
 
             return _react2.default.createElement(
-                _dropdown2.default,
+                _antd.Dropdown,
                 {
                     overlay: fieldMenu,
                     trigger: ['click'],

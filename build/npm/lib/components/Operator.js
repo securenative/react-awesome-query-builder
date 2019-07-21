@@ -3,39 +3,9 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _button = require('antd/lib/button');
-
-var _button2 = _interopRequireDefault(_button);
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _dropdown = require('antd/lib/dropdown');
-
-var _dropdown2 = _interopRequireDefault(_dropdown);
-
-var _menu = require('antd/lib/menu');
-
-var _menu2 = _interopRequireDefault(_menu);
-
-var _select = require('antd/lib/select');
-
-var _select2 = _interopRequireDefault(_select);
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp;
-
-require('antd/lib/button/style/css');
-
-require('antd/lib/icon/style/css');
-
-require('antd/lib/dropdown/style/css');
-
-require('antd/lib/menu/style/css');
-
-require('antd/lib/select/style/css');
 
 var _react = require('react');
 
@@ -52,6 +22,8 @@ var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowComp
 var _configUtils = require('../utils/configUtils');
 
 var _stuff = require('../utils/stuff');
+
+var _antd = require('antd');
 
 var _map = require('lodash/map');
 
@@ -85,12 +57,12 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Option = _select2.default.Option,
-    OptGroup = _select2.default.OptGroup;
+var Option = _antd.Select.Option,
+    OptGroup = _antd.Select.OptGroup;
 
-var SubMenu = _menu2.default.SubMenu;
-var MenuItem = _menu2.default.Item;
-var DropdownButton = _dropdown2.default.Button;
+var SubMenu = _antd.Menu.SubMenu;
+var MenuItem = _antd.Menu.Item;
+var DropdownButton = _antd.Dropdown.Button;
 var Operator = (_temp = _class = function (_Component) {
     _inherits(Operator, _Component);
 
@@ -151,13 +123,13 @@ var Operator = (_temp = _class = function (_Component) {
         key: 'buildMenuToggler',
         value: function buildMenuToggler(label) {
             var toggler = _react2.default.createElement(
-                _button2.default,
+                _antd.Button,
                 {
                     size: this.props.config.settings.renderSize || "small"
                 },
                 label,
                 ' ',
-                _react2.default.createElement(_icon2.default, { type: 'down' })
+                _react2.default.createElement(_antd.Icon, { type: 'down' })
             );
 
             return toggler;
@@ -193,7 +165,7 @@ var Operator = (_temp = _class = function (_Component) {
             var placeholderWidth = (0, _stuff.calcTextWidth)(placeholder, '14px');
             var fieldSelectItems = this.buildSelectItems(this.operatorOptions);
             var opSelect = _react2.default.createElement(
-                _select2.default,
+                _antd.Select,
                 {
                     dropdownAlign: dropdownPlacement ? _stuff.BUILT_IN_PLACEMENTS[dropdownPlacement] : undefined,
                     dropdownMatchSelectWidth: false,
@@ -216,10 +188,10 @@ var Operator = (_temp = _class = function (_Component) {
             var placeholder = this.curOpOpts().label || this.props.config.settings.operatorPlaceholder;
             var opMenuItems = this.buildMenuItems(this.operatorOptions);
             var opMenu = _react2.default.createElement(
-                _menu2.default,
-                {
-                    //size={this.props.config.settings.renderSize || "small"}
-                    selectedKeys: [selectedOpKey],
+                _antd.Menu
+                //size={this.props.config.settings.renderSize || "small"}
+                ,
+                { selectedKeys: [selectedOpKey],
                     onClick: this.handleOperatorMenuSelect
                 },
                 opMenuItems
@@ -227,7 +199,7 @@ var Operator = (_temp = _class = function (_Component) {
             var opToggler = this.buildMenuToggler(placeholder);
 
             return _react2.default.createElement(
-                _dropdown2.default,
+                _antd.Dropdown,
                 {
                     overlay: opMenu,
                     trigger: ['click'],

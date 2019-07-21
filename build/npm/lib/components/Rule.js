@@ -2,33 +2,9 @@
 
 exports.__esModule = true;
 
-var _col = require('antd/lib/col');
-
-var _col2 = _interopRequireDefault(_col);
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _dropdown = require('antd/lib/dropdown');
-
-var _dropdown2 = _interopRequireDefault(_dropdown);
-
-var _menu = require('antd/lib/menu');
-
-var _menu2 = _interopRequireDefault(_menu);
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _class2, _temp;
-
-require('antd/lib/col/style/css');
-
-require('antd/lib/icon/style/css');
-
-require('antd/lib/dropdown/style/css');
-
-require('antd/lib/menu/style/css');
 
 var _react = require('react');
 
@@ -58,6 +34,8 @@ var _OperatorOptions = require('./OperatorOptions');
 
 var _OperatorOptions2 = _interopRequireDefault(_OperatorOptions);
 
+var _antd = require('antd');
+
 var _configUtils = require('../utils/configUtils');
 
 var _reactAddonsPureRenderMixin = require('react-addons-pure-render-mixin');
@@ -72,9 +50,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SubMenu = _menu2.default.SubMenu;
-var MenuItem = _menu2.default.Item;
-var DropdownButton = _dropdown2.default.Button;
+var SubMenu = _antd.Menu.SubMenu;
+var MenuItem = _antd.Menu.Item;
+var DropdownButton = _antd.Dropdown.Button;
 
 var classNames = require('classnames');
 
@@ -146,11 +124,11 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                 this.props.config.settings.canReorder && this.props.treeNodesCnt > 2 && _react2.default.createElement(
                     'span',
                     { className: "qb-drag-handler", onMouseDown: this.handleDraggerMouseDown },
-                    _react2.default.createElement(_icon2.default, { type: 'bars' }),
+                    _react2.default.createElement(_antd.Icon, { type: 'bars' }),
                     ' '
                 ),
                 true ? _react2.default.createElement(
-                    _col2.default,
+                    _antd.Col,
                     { key: "fields", className: 'rule--field' },
                     this.props.config.settings.showLabels && _react2.default.createElement(
                         'label',
@@ -167,7 +145,7 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                     })
                 ) : null,
                 this.props.selectedField && !selectedFieldWidgetConfig.hideOperator && _react2.default.createElement(
-                    _col2.default,
+                    _antd.Col,
                     { key: "operators-for-" + (selectedFieldPartsLabels || []).join("_"), className: 'rule--operator' },
                     this.props.config.settings.showLabels && _react2.default.createElement(
                         'label',
@@ -184,7 +162,7 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                     })
                 ),
                 this.props.selectedField && selectedFieldWidgetConfig.hideOperator && selectedFieldWidgetConfig.operatorInlineLabel && _react2.default.createElement(
-                    _col2.default,
+                    _antd.Col,
                     { key: "operators-for-" + (selectedFieldPartsLabels || []).join("_"), className: 'rule--operator' },
                     _react2.default.createElement(
                         'div',
@@ -202,7 +180,7 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                     )
                 ),
                 isFieldAndOpSelected && _react2.default.createElement(
-                    _col2.default,
+                    _antd.Col,
                     { key: "widget-for-" + this.props.selectedOperator, className: 'rule--value' },
                     _react2.default.createElement(_Widget2.default, {
                         key: 'values',
@@ -216,7 +194,7 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                     })
                 ),
                 isFieldAndOpSelected && selectedOperatorHasOptions && _react2.default.createElement(
-                    _col2.default,
+                    _antd.Col,
                     { key: "op-options-for-" + this.props.selectedOperator, className: 'rule--operator-options' },
                     _react2.default.createElement(_OperatorOptions2.default, {
                         key: 'operatorOptions',
@@ -230,7 +208,7 @@ var Rule = (0, _RuleContainer2.default)(_class = (_temp = _class2 = function (_C
                 _react2.default.createElement(
                     'div',
                     { className: 'rule--header' },
-                    !this.props.config.settings.readonlyMode && _react2.default.createElement(_icon2.default, {
+                    !this.props.config.settings.readonlyMode && _react2.default.createElement(_antd.Icon, {
                         type: 'close',
                         onClick: this.props.removeSelf
 

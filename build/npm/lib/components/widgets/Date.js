@@ -3,17 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _datePicker = require('antd/lib/date-picker');
-
-var _datePicker2 = _interopRequireDefault(_datePicker);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp, _initialiseProps;
-
-require('antd/lib/date-picker/style/css');
 
 var _react = require('react');
 
@@ -22,6 +16,8 @@ var _react2 = _interopRequireDefault(_react);
 var _propTypes = require('prop-types');
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _antd = require('antd');
 
 var _moment = require('moment');
 
@@ -39,8 +35,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var MonthPicker = _datePicker2.default.MonthPicker,
-    RangePicker = _datePicker2.default.RangePicker;
+var MonthPicker = _antd.DatePicker.MonthPicker,
+    RangePicker = _antd.DatePicker.RangePicker;
 var DateWidget = (_temp = _class = function (_Component) {
     _inherits(DateWidget, _Component);
 
@@ -75,7 +71,7 @@ var DateWidget = (_temp = _class = function (_Component) {
 
             var dateValue = value ? (0, _moment2.default)(value, valueFormat) : null;
 
-            return _react2.default.createElement(_datePicker2.default, _extends({
+            return _react2.default.createElement(_antd.DatePicker, _extends({
                 key: 'widget-date',
                 placeholder: this.props.placeholder,
                 size: this.props.config.settings.renderSize || "small",

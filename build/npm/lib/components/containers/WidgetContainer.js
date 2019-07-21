@@ -2,25 +2,7 @@
 
 exports.__esModule = true;
 
-var _popover = require('antd/lib/popover');
-
-var _popover2 = _interopRequireDefault(_popover);
-
-var _icon = require('antd/lib/icon');
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _radio = require('antd/lib/radio');
-
-var _radio2 = _interopRequireDefault(_radio);
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-require('antd/lib/popover/style/css');
-
-require('antd/lib/icon/style/css');
-
-require('antd/lib/radio/style/css');
 
 var _react = require('react');
 
@@ -50,6 +32,8 @@ var _configUtils = require('../../utils/configUtils');
 
 var _stuff = require('../../utils/stuff');
 
+var _antd = require('antd');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
@@ -60,8 +44,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var RadioButton = _radio2.default.Button;
-var RadioGroup = _radio2.default.Group;
+var RadioButton = _antd.Radio.Button;
+var RadioGroup = _antd.Radio.Group;
 
 exports.default = function (Widget) {
     var _class, _temp;
@@ -190,9 +174,9 @@ exports.default = function (Widget) {
                     'span',
                     null,
                     _react2.default.createElement(
-                        _popover2.default,
+                        _antd.Popover,
                         { content: content, title: valueSourcesPopupTitle },
-                        _react2.default.createElement(_icon2.default, { type: 'ellipsis' })
+                        _react2.default.createElement(_antd.Icon, { type: 'ellipsis' })
                     )
                 );
             };

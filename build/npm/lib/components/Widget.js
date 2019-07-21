@@ -3,15 +3,9 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _col = require('antd/lib/col');
-
-var _col2 = _interopRequireDefault(_col);
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _class2, _temp2;
-
-require('antd/lib/col/style/css');
 
 var _react = require('react');
 
@@ -28,6 +22,8 @@ var _reactAddonsShallowCompare2 = _interopRequireDefault(_reactAddonsShallowComp
 var _WidgetContainer = require('./containers/WidgetContainer');
 
 var _WidgetContainer2 = _interopRequireDefault(_WidgetContainer);
+
+var _antd = require('antd');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58,7 +54,7 @@ var Widget = (0, _WidgetContainer2.default)(_class = (_temp2 = _class2 = functio
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _col2.default,
+        _antd.Col,
         {
           className: 'rule--widget rule--widget--' + this.props.name.toUpperCase(),
           key: "widget-col-" + this.props.name

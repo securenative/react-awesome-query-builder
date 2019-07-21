@@ -3,23 +3,11 @@
 exports.__esModule = true;
 exports.default = undefined;
 
-var _col = require('antd/lib/col');
-
-var _col2 = _interopRequireDefault(_col);
-
-var _inputNumber = require('antd/lib/input-number');
-
-var _inputNumber2 = _interopRequireDefault(_inputNumber);
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _class, _temp2;
-
-require('antd/lib/col/style/css');
-
-require('antd/lib/input-number/style/css');
 
 var _react = require('react');
 
@@ -32,6 +20,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 var _reactDom = require('react-dom');
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _antd = require('antd');
 
 require('antd/lib/date-picker/style');
 
@@ -80,9 +70,9 @@ var NumberWidget = (_temp2 = _class = function (_Component) {
       var customProps = this.props.customProps || {};
 
       return _react2.default.createElement(
-        _col2.default,
+        _antd.Col,
         null,
-        _react2.default.createElement(_inputNumber2.default, _extends({
+        _react2.default.createElement(_antd.InputNumber, _extends({
           key: 'widget-number',
           size: this.props.config.settings.renderSize || "small",
           ref: 'num',
